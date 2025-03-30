@@ -22,6 +22,10 @@ which is a |Dictionary| containing all options as key-value pairs. The default
 options can be retrieved with |launchpad#default_options()|.
 The following keys are available:
 
+	"autojump"					*launchpad_options_autojump*
+		If truthy, automatically jump to the first error with |cexpr|
+		when a build fails. Otherwise |cgetexpr| will be used.
+
 	"autosave"					*launchpad_options_autosave*
 		If truthy, automatically save all |modified| files before
 		building.
@@ -35,7 +39,7 @@ The following keys are available:
 API							*launchpad-api*
 
 	launchpad#run()					*launchpad#run()*
-		Build and run the project.
+		Build and launch the project.
 
 ==============================================================================
 	vim:tw=78:sw=4:ts=8:ft=help:norl:noet:

@@ -3,16 +3,16 @@ func launchpad#lib#cmake#check()
 endfunc
 
 func launchpad#lib#cmake#build()
-	call launchpad#job('cmake --build build', 'launchpad#build_cb')
+	call launchpad#job('cmake --build build', #{out_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
 endfunc
 
 func launchpad#lib#cmake#launch()
 	for f in readdirex("build")
 		if f.type == "file" && f.perm[2] == 'x'
-			call launchpad#job("build/" . f.name, 'launchpad#launch_cb')
+			call launchpad#job("build/" . f.name, #{exit_cb: function('launchpad#launch_cb')})
 			return
 		endif
 	endfor
 
-	echoe "Unable to find a target to launch"
+	echo "Unable to find a target to launch"
 endfunc

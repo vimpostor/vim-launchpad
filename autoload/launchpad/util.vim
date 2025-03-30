@@ -1,7 +1,6 @@
 func launchpad#util#notify(msg)
-	if has('nvim')
-		echoe a:msg
-	else
+	echo a:msg
+	if !has('nvim')
 		call popup_notification(a:msg, {})
 	endif
 endfunc

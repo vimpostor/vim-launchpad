@@ -19,7 +19,7 @@ func launchpad#lib#init()
 		endif
 	endfor
 
-	echoe "Unable to find a launch definition for the current project"
+	echo "Unable to find a launch definition for the current project"
 endfunc
 
 func launchpad#lib#build()
