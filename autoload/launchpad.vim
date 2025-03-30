@@ -44,7 +44,7 @@ endfunc
 
 func launchpad#build_cb(j, s)
 	if a:s != 0
-		echo 'Build failed!'
+		call launchpad#util#notify('Build failed!')
 		return
 	else
 		echo 'Build done.'
@@ -56,7 +56,7 @@ func launchpad#build_cb(j, s)
 endfunc
 
 func launchpad#launch_cb(j, s)
-	echo 'Program quit with exit code ' . a:s
+	echoe 'Program quit with exit code ' . a:s
 endfunc
 
 func launchpad#build_progress_cb(p)
