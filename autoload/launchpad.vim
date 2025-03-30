@@ -1,8 +1,6 @@
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
 
-	let g:build_cmd = ''
-	let g:launch_cmd = ''
 	let s:run = 0
 
 	if g:launchpad_options.default_mappings
@@ -17,11 +15,11 @@ func launchpad#default_options()
 	\ }
 endfunc
 
-func launchpad#job(cmd, cb)
+func launchpad#job(cmd, exitcb)
 	if has('nvim')
 		let s:job = jobstart(a:cmd)
 	else
-		let options = #{noblock: 1, exit_cb: function(a:cb)}
+		let options = #{noblock: 1, exit_cb: function(a:exitcb)}
 		let s:job = job_start(a:cmd, options)
 	endif
 endfunc
@@ -32,7 +30,7 @@ func launchpad#build()
 	endif
 	call launchpad#lib#init()
 	echo 'Building...'
-	call launchpad#job(g:build_cmd, 'launchpad#build_cb')
+	call launchpad#lib#build()
 endfunc
 
 func launchpad#run()
@@ -41,7 +39,7 @@ func launchpad#run()
 endfunc
 
 func launchpad#launch()
-	call launchpad#job(g:launch_cmd, 'launchpad#launch_cb')
+	call launchpad#lib#launch()
 endfunc
 
 func launchpad#build_cb(j, s)

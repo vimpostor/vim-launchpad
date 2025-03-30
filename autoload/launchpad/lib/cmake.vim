@@ -1,10 +1,5 @@
-func launchpad#lib#cmake#init()
-	if filereadable('CMakeLists.txt')
-		let g:build_cmd = 'cmake --build build'
-		let g:launch_cmd = 'sh -c ' . fnameescape('$(find build -maxdepth 1 -type f -executable | head -1)')
-		return 1
-	endif
-	return 0
+func launchpad#lib#cmake#check()
+	return filereadable('CMakeLists.txt')
 endfunc
 
 func launchpad#lib#cmake#build()
@@ -12,5 +7,12 @@ func launchpad#lib#cmake#build()
 endfunc
 
 func launchpad#lib#cmake#launch()
-	call launchpad#job(g:launch_cmd, 'launchpad#launch_cb')
+	for f in readdirex("build")
+		if f.type == "file" && f.perm[2] == 'x'
+			call launchpad#job("build/" . f.name, 'launchpad#launch_cb')
+			return
+		endif
+	endfor
+
+	echoe "Unable to find a target to launch"
 endfunc
