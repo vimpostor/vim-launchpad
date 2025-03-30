@@ -73,5 +73,11 @@ func launchpad#launch_cb(j, s)
 endfunc
 
 func launchpad#out_cb(channel, msg)
-	call add(s:job_lines, a:msg)
+	if !launchpad#lib#parse_output(a:msg)
+		call add(s:job_lines, a:msg)
+	endif
+endfunc
+
+func launchpad#build_progress(i, n)
+	echo printf("Building %d/%d", a:i, a:n)
 endfunc

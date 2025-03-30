@@ -1,8 +1,12 @@
 let s:path = fnameescape(resolve(expand('<sfile>:p:h')) . '/lib')
 let s:lib = ''
 
-func launchpad#lib#dispatch(tgt, fn)
-	let Func = function(printf("launchpad#lib#%s#%s", a:tgt, a:fn))
+func launchpad#lib#dispatch(tgt, fn, ...)
+	let args = []
+	if a:0 > 0
+		let args = a:1
+	endif
+	let Func = function(printf("launchpad#lib#%s#%s", a:tgt, a:fn), args)
 	return Func()
 endfunc
 
@@ -28,4 +32,9 @@ endfunc
 
 func launchpad#lib#launch()
 	call launchpad#lib#dispatch(s:lib, "launch")
+endfunc
+
+func launchpad#lib#parse_output(l)
+	" returns 1 if it consumes the event
+	return launchpad#lib#dispatch(s:lib, "parse_output", [a:l])
 endfunc
