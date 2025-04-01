@@ -30,7 +30,7 @@ func launchpad#lib#00_config#build()
 endfunc
 
 func launchpad#lib#00_config#launch()
-	call launchpad#job(launchpad#lib#00_config#sanitize_cmd(s:json.launch[0].cmd), #{env: get(s:json.launch[0], "env", {}), out_cb: function('launchpad#out_cb'), err_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#launch_cb')})
+	call launchpad#job(launchpad#lib#00_config#sanitize_cmd(s:json.launch[0].cmd), #{env: get(s:json.launch[0], "env", {}), out_cb: function('launchpad#launch_out_cb'), err_cb: function('launchpad#launch_out_cb'), exit_cb: function('launchpad#launch_cb')})
 endfunc
 
 func launchpad#lib#00_config#parse_output(l)
