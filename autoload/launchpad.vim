@@ -13,6 +13,7 @@ endfunc
 func launchpad#default_options()
 	return #{
 		\ autojump: 1,
+		\ autoopenquickfix: 1,
 		\ autosave: 1,
 		\ default_mappings: 1,
 	\ }
@@ -47,20 +48,21 @@ func launchpad#launch()
 endfunc
 
 func launchpad#build_cb(j, s)
+	" add errors to quickfix-list
+	if g:launchpad_options.autojump
+		cexpr s:job_lines
+	else
+		cgetexpr s:job_lines
+	endif
+	if g:launchpad_options.autoopenquickfix
+		cwindow
+	endif
+
 	if a:s != 0
 		call launchpad#util#notify('Build failed!')
-
-		" add errors to quickfix-list
-		if g:launchpad_options.autojump
-			cexpr s:job_lines
-		else
-			cgetexpr s:job_lines
-		endif
-
 		return
-	else
-		echo 'Build done.'
 	endif
+	echo 'Build done.'
 
 	if s:run
 		call launchpad#launch()
