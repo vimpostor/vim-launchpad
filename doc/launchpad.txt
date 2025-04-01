@@ -26,6 +26,10 @@ The following keys are available:
 		If truthy, automatically jump to the first error with |cexpr|
 		when a build fails. Otherwise |cgetexpr| will be used.
 
+	"autoopenquickfix"				*launchpad_options_autoopenquickfix*
+		If truthy, open the |quickfix| list automatically when there
+		are errors.
+
 	"autosave"					*launchpad_options_autosave*
 		If truthy, automatically save all |modified| files before
 		building.
@@ -37,6 +41,12 @@ The following keys are available:
 
 ------------------------------------------------------------------------------
 API							*launchpad-api*
+
+	launchpad#build()				*launchpad#build()*
+		Build the project.
+
+	launchpad#launch()				*launchpad#launch()*
+		Launch the project.
 
 	launchpad#run()					*launchpad#run()*
 		Build and launch the project.
