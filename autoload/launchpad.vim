@@ -1,6 +1,7 @@
 let s:job_lines = []
 let s:launch_lines = []
 let s:launch_buf = 0
+let s:launch_running = 0
 
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
@@ -9,6 +10,7 @@ func launchpad#init()
 
 	if g:launchpad_options.default_mappings
 		nnoremap <silent> <Leader>r :call launchpad#run()<CR>
+		nnoremap <silent> <Leader><F3> :call launchpad#stop()<CR>
 	endif
 endfunc
 
@@ -31,6 +33,7 @@ func launchpad#job(cmd, opts)
 endfunc
 
 func launchpad#build()
+	call launchpad#stop()
 	let s:job_lines = []
 	if g:launchpad_options.autosave
 		silent exe 'wa'
@@ -48,6 +51,18 @@ endfunc
 func launchpad#launch()
 	let s:launch_lines = []
 	call launchpad#lib#launch()
+	let s:launch_running = 1
+endfunc
+
+func launchpad#stop()
+	if !s:launch_running
+		return
+	endif
+	if has('nvim')
+		call jobstop(s:job)
+	else
+		call job_stop(s:job)
+	endif
 endfunc
 
 func launchpad#build_cb(j, s)
@@ -74,6 +89,7 @@ func launchpad#build_cb(j, s)
 endfunc
 
 func launchpad#launch_cb(j, s)
+	let s:launch_running = 0
 	pclose
 	echom 'Program quit with exit code ' . a:s
 endfunc
@@ -86,6 +102,7 @@ endfunc
 
 func launchpad#launch_out_cb(channel, msg)
 	if empty(s:launch_lines)
+		" create a scratch buffer
 		let s:launch_buf = bufadd("")
 		call setbufvar(s:launch_buf, "&buftype", "nofile")
 		call setbufvar(s:launch_buf, "&bufhidden", "hide")
