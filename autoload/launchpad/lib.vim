@@ -38,3 +38,12 @@ func launchpad#lib#parse_output(l)
 	" returns 1 if it consumes the event
 	return launchpad#lib#dispatch(s:lib, "parse_output", [a:l])
 endfunc
+
+func launchpad#lib#parse_output_ninja(l)
+	if a:l !~# '^\[\d\+/\d\+\] '
+		return 0
+	endif
+	let r = matchlist(a:l,  '^\[\(\d\+\)/\(\d\+\)\] ')
+	call launchpad#build_progress(r[1], r[2])
+	return 1
+endfunc

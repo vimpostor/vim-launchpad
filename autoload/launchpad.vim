@@ -1,4 +1,5 @@
 let s:job_lines = []
+let s:last_launch_out = []
 
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
@@ -44,6 +45,7 @@ func launchpad#run()
 endfunc
 
 func launchpad#launch()
+	let s:job_lines = []
 	call launchpad#lib#launch()
 endfunc
 
@@ -62,7 +64,7 @@ func launchpad#build_cb(j, s)
 		call launchpad#util#notify('Build failed!')
 		return
 	endif
-	echo 'Build done.'
+	echom 'Build done.'
 
 	if s:run
 		call launchpad#launch()
@@ -71,7 +73,8 @@ func launchpad#build_cb(j, s)
 endfunc
 
 func launchpad#launch_cb(j, s)
-	echo 'Program quit with exit code ' . a:s
+	let s:last_launch_out = s:job_lines
+	echom 'Program quit with exit code ' . a:s
 endfunc
 
 func launchpad#out_cb(channel, msg)

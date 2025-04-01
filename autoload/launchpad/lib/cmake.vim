@@ -18,10 +18,5 @@ func launchpad#lib#cmake#launch()
 endfunc
 
 func launchpad#lib#cmake#parse_output(l)
-	if a:l !~# '^\[\d\+/\d\+\] '
-		return 0
-	endif
-	let r = matchlist(a:l,  '^\[\(\d\+\)/\(\d\+\)\] ')
-	call launchpad#build_progress(r[1], r[2])
-	return 1
+	return launchpad#lib#parse_output_ninja(a:l)
 endfunc
