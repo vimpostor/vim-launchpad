@@ -1,5 +1,6 @@
 let s:job_lines = []
 let s:launch_lines = []
+let s:launch_buf = 0
 
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
@@ -73,6 +74,7 @@ func launchpad#build_cb(j, s)
 endfunc
 
 func launchpad#launch_cb(j, s)
+	pclose
 	echom 'Program quit with exit code ' . a:s
 endfunc
 
@@ -83,8 +85,25 @@ func launchpad#out_cb(channel, msg)
 endfunc
 
 func launchpad#launch_out_cb(channel, msg)
-	echom a:msg
+	if empty(s:launch_lines)
+		let s:launch_buf = bufadd("")
+		call setbufvar(s:launch_buf, "&buftype", "nofile")
+		call setbufvar(s:launch_buf, "&bufhidden", "hide")
+		call setbufvar(s:launch_buf, "&swapfile", 0)
+		exe s:launch_buf . 'pbuffer'
+	endif
 	call add(s:launch_lines, a:msg)
+	" append the line to the buffer
+	if len(getbufoneline(s:launch_buf, '$'))
+		call appendbufline(s:launch_buf, '$', a:msg)
+	else
+		call setbufline(s:launch_buf, '$', a:msg)
+	endif
+	let win = bufwinid(s:launch_buf)
+	if line('.', win) == line('$', win) - 1
+		" scroll to end if cursor was on last line
+		call win_execute(win, "norm G")
+	endif
 endfunc
 
 func launchpad#build_progress(i, n)
