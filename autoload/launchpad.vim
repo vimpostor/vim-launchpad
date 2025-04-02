@@ -1,6 +1,7 @@
 let s:job_lines = []
 let s:launch_buf = -1
 let s:launch_running = 0
+let s:job_killed = 0
 
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
@@ -18,6 +19,7 @@ func launchpad#default_options()
 		\ autojump: 1,
 		\ autoopenquickfix: 1,
 		\ autosave: 1,
+		\ closepreview: "auto",
 		\ default_mappings: 1,
 	\ }
 endfunc
@@ -53,6 +55,7 @@ func launchpad#launch()
 		exe 'bdelete ' . s:launch_buf
 		let s:launch_buf = -1
 	endif
+	let s:job_killed = 0
 	call launchpad#lib#launch()
 	let s:launch_running = 1
 endfunc
@@ -61,6 +64,7 @@ func launchpad#stop()
 	if !s:launch_running
 		return
 	endif
+	let s:job_killed = 1
 	if has('nvim')
 		call jobstop(s:job)
 	else
@@ -91,9 +95,18 @@ func launchpad#build_cb(j, s)
 	endif
 endfunc
 
+func launchpad#close_preview()
+	if g:launchpad_options.closepreview == "never"
+		return
+	endif
+	if s:job_killed || !a:s || g:launchpad_options.closepreview == "always"
+		pclose
+	endif
+endfunc
+
 func launchpad#launch_cb(j, s)
 	let s:launch_running = 0
-	pclose
+	call launchpad#close_preview()
 	echom 'Program quit with exit code ' . a:s
 endfunc
 

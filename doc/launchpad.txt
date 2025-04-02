@@ -12,6 +12,14 @@ INTRODUCTION						*launchpad-introduction*
 
 This plugin provides automatic zero-configuration "Build and Run"
 functionality in a language-agnostic way.
+Vim by default ships with usable build support as per |:compiler| and
+|'makeprg'|. The goal is to not stray too far from this original idiomatic vim
+compiler support and leverage for example the builtin |quickfix| error jumping
+with |:cexpr|, and then extend it in the following principles:
+- Make the build step asynchronous
+- Require zero configuration for the common case
+- Allow to launch the built program
+- Provide a reasonable interface (e.g. show program output)
 
 ------------------------------------------------------------------------------
 CONFIGURATION						*launchpad-configure*
@@ -33,6 +41,17 @@ The following keys are available:
 	"autosave"					*launchpad_options_autosave*
 		If truthy, automatically save all |modified| files before
 		building.
+
+	"closepreview"					*launchpad_options_closepreview*
+		The value of this option determines when the preview window
+		will automatically close.
+			`"always"`	Always close the preview.
+			`"never"`	Never close the preview.
+			`"auto"`	Use some heuristics to provide a good
+					balance between the above two.
+
+		The heuristics for the `"auto"` value are an implementation
+		detail, but in general follow the UX of popular IDEs.
 
 	"default_mappings"				*launchpad_options_default_mappings*
 		If truthy, use the default keybindings. When you disable this,
