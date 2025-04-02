@@ -97,7 +97,7 @@ func launchpad#build_cb(j, s)
 	endif
 endfunc
 
-func launchpad#close_preview()
+func launchpad#close_preview(s)
 	if g:launchpad_options.closepreview == "never"
 		return
 	endif
@@ -108,7 +108,7 @@ endfunc
 
 func launchpad#launch_cb(j, s)
 	let s:launch_running = 0
-	call launchpad#close_preview()
+	call launchpad#close_preview(a:s)
 	echom 'Program quit with exit code ' . a:s
 endfunc
 
