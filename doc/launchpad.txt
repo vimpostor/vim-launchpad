@@ -20,6 +20,7 @@ with |:cexpr|, and then extend it in the following principles:
 - Allow to launch the built program
 - Require zero configuration for the common case
 - Provide a reasonable interface (e.g. show program output)
+- Add debugging integration with |vimspector|
 
 ------------------------------------------------------------------------------
 CONFIGURATION						*launchpad-configure*

@@ -6,6 +6,7 @@ Vim by default ships with usable build support as per [:h :compiler](https://vim
 - Allow to launch the built program
 - Require zero configuration for the common case
 - Provide a reasonable interface (e.g. show program output)
+- Add debugging integration with [vimspector](https://github.com/puremourning/vimspector)
 
 # Installation
 

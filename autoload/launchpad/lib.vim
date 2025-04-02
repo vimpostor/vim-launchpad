@@ -39,6 +39,14 @@ func launchpad#lib#parse_output(l)
 	return launchpad#lib#dispatch(s:lib, "parse_output", [a:l])
 endfunc
 
+func launchpad#lib#launch_cmd()
+	return launchpad#lib#dispatch(s:lib, "launch_cmd")
+endfunc
+
+func launchpad#lib#launch_env()
+	return launchpad#lib#dispatch(s:lib, "launch_env")
+endfunc
+
 func launchpad#lib#parse_output_ninja(l)
 	if a:l !~# '^\[\d\+/\d\+\] '
 		return 0

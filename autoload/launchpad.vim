@@ -10,10 +10,11 @@ func launchpad#init()
 
 	if g:launchpad_options.default_mappings
 		nnoremap <silent> <Leader>r :call launchpad#run()<CR>
-		nnoremap <silent> <Leader><F3> :call launchpad#stop()<CR>
+		nnoremap <silent> <F3> :call launchpad#stop()<CR>
 	endif
 
 	command LaunchpadBoilerplate call launchpad#boilerplate()
+	command LaunchpadGenVimspector call launchpad#vimspector#gen()
 endfunc
 
 func launchpad#default_options()
