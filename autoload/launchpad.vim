@@ -1,6 +1,5 @@
 let s:job_lines = []
-let s:launch_lines = []
-let s:launch_buf = 0
+let s:launch_buf = -1
 let s:launch_running = 0
 
 func launchpad#init()
@@ -49,7 +48,11 @@ func launchpad#run()
 endfunc
 
 func launchpad#launch()
-	let s:launch_lines = []
+	if s:launch_buf >= 0
+		" unload the last output buffer
+		exe 'bdelete ' . s:launch_buf
+		let s:launch_buf = -1
+	endif
 	call launchpad#lib#launch()
 	let s:launch_running = 1
 endfunc
@@ -100,16 +103,19 @@ func launchpad#out_cb(channel, msg)
 	endif
 endfunc
 
+func launchpad#open_launch_out()
+	exe s:launch_buf . 'pbuffer'
+endfunc
+
 func launchpad#launch_out_cb(channel, msg)
-	if empty(s:launch_lines)
+	if s:launch_buf < 0
 		" create a scratch buffer
 		let s:launch_buf = bufadd("")
 		call setbufvar(s:launch_buf, "&buftype", "nofile")
 		call setbufvar(s:launch_buf, "&bufhidden", "hide")
 		call setbufvar(s:launch_buf, "&swapfile", 0)
-		exe s:launch_buf . 'pbuffer'
+		call launchpad#open_launch_out()
 	endif
-	call add(s:launch_lines, a:msg)
 	" append the line to the buffer
 	if len(getbufoneline(s:launch_buf, '$'))
 		call appendbufline(s:launch_buf, '$', a:msg)
