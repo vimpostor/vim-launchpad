@@ -3,8 +3,8 @@
 This plugin provides automatic zero-configuration "Build and Run" functionality in a language-agnostic way.
 Vim by default ships with usable build support as per [:h :compiler](https://vimhelp.org/quickfix.txt.html#%3Acompiler) and [:h 'makeprg'](https://vimhelp.org/options.txt.html#%27makeprg%27). The goal is to not stray too far from this original idiomatic vim compiler support and leverage for example the builtin quickfix error jumping from [:h :cexpr](https://vimhelp.org/quickfix.txt.html#%3Acexpr), and then extend it in the following principles:
 - Make the build step asynchronous
-- Require zero configuration for the common case
 - Allow to launch the built program
+- Require zero configuration for the common case
 - Provide a reasonable interface (e.g. show program output)
 
 # Installation

@@ -17,8 +17,8 @@ Vim by default ships with usable build support as per |:compiler| and
 compiler support and leverage for example the builtin |quickfix| error jumping
 with |:cexpr|, and then extend it in the following principles:
 - Make the build step asynchronous
-- Require zero configuration for the common case
 - Allow to launch the built program
+- Require zero configuration for the common case
 - Provide a reasonable interface (e.g. show program output)
 
 ------------------------------------------------------------------------------

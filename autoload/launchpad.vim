@@ -12,6 +12,8 @@ func launchpad#init()
 		nnoremap <silent> <Leader>r :call launchpad#run()<CR>
 		nnoremap <silent> <Leader><F3> :call launchpad#stop()<CR>
 	endif
+
+	command LaunchpadBoilerplate call launchpad#boilerplate()
 endfunc
 
 func launchpad#default_options()
@@ -144,4 +146,9 @@ endfunc
 
 func launchpad#build_progress(i, n)
 	echo printf("Building %d/%d", a:i, a:n)
+endfunc
+
+func launchpad#boilerplate()
+	call filecopy(fnameescape(resolve(expand('<script>:p:h') . "/../doc/.launchpad.json")), ".launchpad.json")
+	edit .launchpad.json
 endfunc
