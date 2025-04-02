@@ -6,5 +6,10 @@ func launchpad#vimspector#gen()
 	endif
 
 	let cmd = launchpad#lib#launch_cmd()
-	call writefile([json_encode(#{configurations: #{Launch: #{adapter: "vscode-cpptools", configuration: #{request: "launch", program: cmd[0], args: cmd[1:], cwd: $PWD, env: launchpad#lib#launch_env(), externalConsole: 1, MIMode: "gdb"}}}})], ".vimspector.json")
+	call writefile([json_encode(#{configurations: #{Launch: #{adapter: "vscode-cpptools", configuration: #{request: "launch", program: cmd[0], args: cmd[1:], cwd: $PWD, environment: launchpad#vimspector#micore_environment(launchpad#lib#launch_env()), externalConsole: 1, MIMode: "gdb"}}}})], ".vimspector.json")
+endfunc
+
+func launchpad#vimspector#micore_environment(env)
+	" MIcore is fucking retarded
+	return mapnew(a:env, {k, v -> #{name: k, value: v}})->values()
 endfunc
