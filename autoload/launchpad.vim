@@ -75,6 +75,14 @@ func launchpad#stop()
 	endif
 endfunc
 
+func launchpad#out_cb(channel, msg)
+	if launchpad#lib#parse_output(a:msg)
+		call launchpad#util#oneline_show(a:msg)
+	else
+		call add(s:job_lines, a:msg)
+	endif
+endfunc
+
 func launchpad#build_cb(j, s)
 	" add errors to quickfix-list
 	if g:launchpad_options.autojump
@@ -95,6 +103,9 @@ func launchpad#build_cb(j, s)
 	if s:run
 		call launchpad#launch()
 		let s:run = 0
+		call launchpad#util#oneline_show("Target running...")
+	else
+		call launchpad#util#oneline_hide()
 	endif
 endfunc
 
@@ -107,20 +118,15 @@ func launchpad#close_preview(s)
 	endif
 endfunc
 
-func launchpad#launch_cb(j, s)
-	let s:launch_running = 0
-	call launchpad#close_preview(a:s)
-	echom 'Program quit with exit code ' . a:s
-endfunc
-
-func launchpad#out_cb(channel, msg)
-	if !launchpad#lib#parse_output(a:msg)
-		call add(s:job_lines, a:msg)
-	endif
-endfunc
-
 func launchpad#open_launch_out()
 	exe s:launch_buf . 'pbuffer'
+endfunc
+
+func launchpad#launch_cb(j, s)
+	let s:launch_running = 0
+	call launchpad#util#oneline_hide()
+	call launchpad#close_preview(a:s)
+	echom 'Program quit with exit code ' . a:s
 endfunc
 
 func launchpad#launch_out_cb(channel, msg)

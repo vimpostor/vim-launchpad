@@ -1,3 +1,5 @@
+let s:line_popup = -1
+
 func launchpad#util#choose(title, arr, callback)
 	let l = len(a:arr)
 	if l < 2
@@ -20,4 +22,20 @@ func launchpad#util#notify(msg)
 	if !has('nvim')
 		call popup_notification(a:msg, #{col: 2})
 	endif
+endfunc
+
+func launchpad#util#oneline_show(m)
+	if s:line_popup < 0
+		let s:line_popup = popup_dialog(a:m, #{pos: "topleft", line: 1})
+	else
+		call popup_settext(s:line_popup, a:m)
+	endif
+endfunc
+
+func launchpad#util#oneline_hide()
+	if s:line_popup < 0
+		return
+	endif
+	call popup_close(s:line_popup)
+	let s:line_popup = -1
 endfunc
