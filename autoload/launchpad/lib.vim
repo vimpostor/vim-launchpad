@@ -47,6 +47,14 @@ func launchpad#lib#launch_env()
 	return launchpad#lib#dispatch(s:lib, "launch_env")
 endfunc
 
+func launchpad#lib#targets()
+	return launchpad#lib#dispatch(s:lib, "targets")
+endfunc
+
+func launchpad#lib#focus_target(i)
+	return launchpad#lib#dispatch(s:lib, "focus_target", [a:i])
+endfunc
+
 func launchpad#lib#parse_output_ninja(l)
 	if a:l !~# '^\[\d\+/\d\+\] '
 		return 0

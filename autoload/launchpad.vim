@@ -14,7 +14,8 @@ func launchpad#init()
 	endif
 
 	command LaunchpadBoilerplate call launchpad#boilerplate()
-	command LaunchpadGenVimspector call launchpad#vimspector#gen()
+	command LaunchpadVimspectorGen call launchpad#vimspector#gen()
+	command LaunchpadFocus call launchpad#focus_target()
 endfunc
 
 func launchpad#default_options()
@@ -147,6 +148,16 @@ endfunc
 
 func launchpad#build_progress(i, n)
 	echo printf("Building %d/%d", a:i, a:n)
+endfunc
+
+func launchpad#focus_target()
+	call launchpad#util#choose("Select target", launchpad#lib#targets(), 'launchpad#focus_callback')
+endfunc
+
+func launchpad#focus_callback(w, i)
+	if a:i > 0
+		call launchpad#lib#focus_target(a:i - 1)
+	endif
 endfunc
 
 func launchpad#boilerplate()
