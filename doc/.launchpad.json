@@ -1,10 +1,12 @@
 {
-	"build": [{
-		"cmd": ["cmake", "--build", "build"],
-		"kind": "ninja"
-	}],
-	"launch": [{
-		"cmd": ["build/path/to/target"],
-		"env": {"FOO": "bar"}
+	"targets": [{
+		"build": {
+			"cmd": ["cmake", "--build", "build"],
+			"kind": "ninja"
+		},
+		"launch": {
+			"cmd": ["build/path/to/target"],
+			"env": {"FOO": "bar"}
+		}
 	}]
 }
