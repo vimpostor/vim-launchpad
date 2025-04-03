@@ -11,10 +11,6 @@ func launchpad#lib#dispatch(tgt, fn, ...)
 endfunc
 
 func launchpad#lib#init()
-	if len(s:lib)
-		return
-	endif
-
 	for d in readdir(s:path)
 		let d = strpart(d, 0, strridx(d, '.'))
 		if launchpad#lib#dispatch(d, "check")
@@ -63,3 +59,5 @@ func launchpad#lib#parse_output_ninja(l)
 	call launchpad#build_progress(r[1], r[2])
 	return 1
 endfunc
+
+call launchpad#lib#init()

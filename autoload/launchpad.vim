@@ -43,7 +43,6 @@ func launchpad#build()
 	if g:launchpad_options.autosave
 		silent exe 'wa'
 	endif
-	call launchpad#lib#init()
 	echo 'Building...'
 	call launchpad#lib#build()
 endfunc
