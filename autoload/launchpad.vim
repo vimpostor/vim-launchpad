@@ -65,6 +65,7 @@ endfunc
 
 func launchpad#stop()
 	if !s:launch_running
+		pclose
 		return
 	endif
 	let s:job_killed = 1
