@@ -96,6 +96,7 @@ func launchpad#build_cb(j, s)
 	endif
 
 	if a:s != 0
+		call launchpad#util#oneline_hide()
 		call launchpad#util#notify('Build failed!')
 		return
 	endif
