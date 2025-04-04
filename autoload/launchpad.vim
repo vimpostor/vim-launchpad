@@ -15,7 +15,7 @@ func launchpad#init()
 
 	command LaunchpadBoilerplate call launchpad#boilerplate()
 	command LaunchpadVimspectorGen call launchpad#vimspector#gen()
-	command LaunchpadFocus call launchpad#focus_target()
+	command -nargs=1 -complete=customlist,launchpad#target_compl LaunchpadFocus call launchpad#focus_target(<q-args>)
 endfunc
 
 func launchpad#default_options()
@@ -155,7 +155,15 @@ func launchpad#build_progress(i, n)
 	echo printf("Building %d/%d", a:i, a:n)
 endfunc
 
-func launchpad#focus_target()
+func launchpad#target_compl(a, l, p)
+	return launchpad#lib#targets()->filter({_, v -> !stridx(v, a:a)})
+endfunc
+
+func launchpad#focus_target(n)
+	call launchpad#lib#focus_target(indexof(launchpad#lib#targets(), {_, v -> a:n == v}))
+endfunc
+
+func launchpad#focus_target_popup()
 	call launchpad#util#choose("Select target", launchpad#lib#targets(), 'launchpad#focus_callback')
 endfunc
 
