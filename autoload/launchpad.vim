@@ -39,6 +39,7 @@ endfunc
 
 func launchpad#build()
 	call launchpad#stop()
+	cclose
 	let s:job_lines = []
 	if g:launchpad_options.autosave
 		silent exe 'wa'
