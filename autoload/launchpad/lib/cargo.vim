@@ -10,8 +10,7 @@ func launchpad#lib#cargo#build()
 endfunc
 
 func launchpad#lib#cargo#launch()
-	let c = launchpad#lib#cargo#launch_cmd()
-	call launchpad#job(c, #{exit_cb: function('launchpad#launch_cb')})
+	call launchpad#job(launchpad#lib#cargo#launch_cmd(), #{out_cb: function('launchpad#launch_out_cb'), err_cb: function('launchpad#launch_out_cb'), exit_cb: function('launchpad#launch_cb')})
 endfunc
 
 func launchpad#lib#cargo#parse_output(l)

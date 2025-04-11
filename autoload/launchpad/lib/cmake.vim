@@ -12,7 +12,7 @@ endfunc
 func launchpad#lib#cmake#launch()
 	let c = launchpad#lib#cmake#launch_cmd()
 	if len(c)
-		call launchpad#job(c, #{exit_cb: function('launchpad#launch_cb')})
+		call launchpad#job(c, #{out_cb: function('launchpad#launch_out_cb'), err_cb: function('launchpad#launch_out_cb'), exit_cb: function('launchpad#launch_cb')})
 	else
 		echo "Unable to find a target to launch"
 	endif
