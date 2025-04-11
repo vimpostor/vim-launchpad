@@ -88,7 +88,7 @@ endfunc
 func launchpad#build_cb(j, s)
 	" add errors to quickfix-list
 	call setqflist([], 'r', #{lines: s:job_lines, efm: &efm})
-	if g:launchpad_options.autojump && getqflist(#{size: 1}).size
+	if g:launchpad_options.autojump && a:s != 0 && getqflist(#{size: 1}).size
 		cc
 	endif
 	if g:launchpad_options.autoopenquickfix
