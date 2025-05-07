@@ -6,7 +6,7 @@ func launchpad#lib#cargo#check()
 endfunc
 
 func launchpad#lib#cargo#build()
-	call launchpad#job(printf("cargo build%s", s:current_target < 0 ? "" : "--bin " . s:targets[s:current_target]), #{err_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
+	call launchpad#job(printf("cargo build%s", s:current_target < 0 ? "" : " --bin " . s:targets[s:current_target]), #{err_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
 endfunc
 
 func launchpad#lib#cargo#launch()
@@ -34,5 +34,5 @@ func launchpad#lib#cargo#targets()
 endfunc
 
 func launchpad#lib#cargo#focus_target(i)
-	let s:current_target = -1
+	let s:current_target = a:i
 endfunc

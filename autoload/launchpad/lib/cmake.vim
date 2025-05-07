@@ -6,7 +6,7 @@ func launchpad#lib#cmake#check()
 endfunc
 
 func launchpad#lib#cmake#build()
-	call launchpad#job(printf("cmake --build build%s", s:current_target < 0 ? "" : "--target " . s:targets[s:current_target]), #{out_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
+	call launchpad#job(printf("cmake --build build%s", s:current_target < 0 ? "" : " --target " . s:targets[s:current_target]), #{out_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
 endfunc
 
 func launchpad#lib#cmake#launch()
@@ -41,5 +41,5 @@ func launchpad#lib#cmake#targets()
 endfunc
 
 func launchpad#lib#cmake#focus_target(i)
-	let s:current_target = -1
+	let s:current_target = a:i
 endfunc
