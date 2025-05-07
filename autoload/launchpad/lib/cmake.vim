@@ -23,8 +23,25 @@ func launchpad#lib#cmake#parse_output(l)
 endfunc
 
 func launchpad#lib#cmake#launch_cmd()
+	if s:current_target + 1
+		let n = s:targets[s:current_target]
+		let l = readfile('build/build.ninja')
+		let e = printf('build %s: ', n)
+		let found = 0
+		for i in l
+			if strpart(i, 0, len(e)) ==# e
+				let found = 1
+			elseif found
+				if strpart(i, 0, 16) == '  TARGET_FILE = '
+					return "build/" . strpart(i, 16)
+				elseif empty(i)
+					break
+				endif
+			endif
+		endfor
+	endif
 	for f in readdirex("build")
-		if f.type == "file" && f.perm[2] == 'x' && (s:current_target < 0 || s:targets[s:current_target] == f.name)
+		if f.type == "file" && f.perm[2] == 'x' && (s:current_target < 0 || n == f.name)
 			return "build/" . f.name
 		endif
 	endfor

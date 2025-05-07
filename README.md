@@ -20,5 +20,6 @@ Plug 'vimpostor/vim-launchpad'
 
 - [vim-dispatch](https://github.com/tpope/vim-dispatch)
 - [asyncrun](https://github.com/skywind3000/asyncrun.vim)
+- [neomake](https://github.com/neomake/neomake)
 
 These alternatives are good in their own rights, but do not provide an opinionated "just works" experience like this plugin does.
