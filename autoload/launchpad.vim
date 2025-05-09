@@ -60,8 +60,7 @@ func launchpad#launch()
 		let s:launch_buf = -1
 	endif
 	let s:job_killed = 0
-	call launchpad#lib#launch()
-	let s:launch_running = 1
+	let s:launch_running = launchpad#lib#launch()
 endfunc
 
 func launchpad#stop()
@@ -103,9 +102,11 @@ func launchpad#build_cb(j, s)
 	echom 'Build done.'
 
 	if s:run
-		call launchpad#launch()
 		let s:run = 0
-		call launchpad#util#oneline_show("Target running...")
+		call launchpad#launch()
+		if s:launch_running
+			call launchpad#util#oneline_show("Target running...")
+		endif
 	else
 		call launchpad#util#oneline_hide()
 	endif

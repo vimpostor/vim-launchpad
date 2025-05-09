@@ -27,7 +27,7 @@ func launchpad#lib#build()
 endfunc
 
 func launchpad#lib#launch()
-	call launchpad#lib#dispatch(s:lib, "launch")
+	return launchpad#lib#dispatch(s:lib, "launch")
 endfunc
 
 func launchpad#lib#parse_output(l)

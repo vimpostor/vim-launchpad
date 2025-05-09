@@ -32,6 +32,7 @@ endfunc
 
 func launchpad#lib#00_config#launch()
 	call launchpad#job(launchpad#lib#00_config#launch_cmd(), #{env: launchpad#lib#00_config#launch_env(), out_cb: function('launchpad#launch_out_cb'), err_cb: function('launchpad#launch_out_cb'), exit_cb: function('launchpad#launch_cb')})
+	return 1
 endfunc
 
 func launchpad#lib#00_config#parse_output(l)
