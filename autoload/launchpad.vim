@@ -177,6 +177,8 @@ func launchpad#focus_callback(w, i)
 endfunc
 
 func launchpad#boilerplate()
-	call filecopy(fnameescape(resolve(expand('<script>:p:h') . "/../doc/.launchpad.json")), ".launchpad.json")
+	if !filereadable(".launchpad.json")
+		call filecopy(fnameescape(resolve(expand('<script>:p:h') . "/../doc/.launchpad.json")), ".launchpad.json")
+	endif
 	edit .launchpad.json
 endfunc
