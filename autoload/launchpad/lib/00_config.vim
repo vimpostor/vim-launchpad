@@ -52,7 +52,7 @@ func launchpad#lib#00_config#launch_env()
 endfunc
 
 func launchpad#lib#00_config#targets()
-	return mapnew(s:json.targets, {_, v -> v->has_key("name") ? v.name : v.build.cmd})
+	return mapnew(s:json.targets, {_, v -> v->has_key("name") ? v.name : string(v.build.cmd)})
 endfunc
 
 func launchpad#lib#00_config#focus_target(i)
