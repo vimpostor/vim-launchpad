@@ -65,7 +65,7 @@ endfunc
 
 func launchpad#stop()
 	if !s:launch_running
-		pclose
+		call launchpad#toggle_launch_out()
 		return
 	endif
 	let s:job_killed = 1
@@ -126,6 +126,14 @@ endfunc
 
 func launchpad#open_launch_out()
 	exe s:launch_buf . 'pbuffer'
+endfunc
+
+func launchpad#toggle_launch_out()
+	if bufwinid(s:launch_buf) + 1
+		pclose
+	else
+		call launchpad#open_launch_out()
+	endif
 endfunc
 
 func launchpad#launch_cb(j, s)
