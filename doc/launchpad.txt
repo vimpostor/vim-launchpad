@@ -36,8 +36,11 @@ The following keys are available:
 		when a build fails. Otherwise |cgetexpr| will be used.
 
 	"autoopenquickfix"				*launchpad_options_autoopenquickfix*
-		If truthy, open the |quickfix| list automatically when there
+		Determines how the |quickfix| list will be opened when there
 		are errors.
+			`"noop"`	Do not open the window.
+			`"open"`	Automatically open the window.
+			`"focus"`	Open and focus the window.
 
 	"autosave"					*launchpad_options_autosave*
 		If truthy, automatically save all |modified| files before

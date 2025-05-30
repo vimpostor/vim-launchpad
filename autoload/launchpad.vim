@@ -21,7 +21,7 @@ endfunc
 func launchpad#default_options()
 	return #{
 		\ autojump: 1,
-		\ autoopenquickfix: 1,
+		\ autoopenquickfix: "open",
 		\ autosave: 1,
 		\ closepreview: "auto",
 		\ default_mappings: 1,
@@ -90,8 +90,11 @@ func launchpad#build_cb(j, s)
 	if g:launchpad_options.autojump && a:s != 0 && getqflist(#{size: 1}).size
 		cc
 	endif
-	if g:launchpad_options.autoopenquickfix
+	if g:launchpad_options.autoopenquickfix != "noop"
 		cwindow
+		if g:launchpad_options.autoopenquickfix == "open"
+			wincmd p
+		endif
 	endif
 
 	if a:s != 0
