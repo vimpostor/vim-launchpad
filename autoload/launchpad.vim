@@ -21,7 +21,7 @@ endfunc
 func launchpad#default_options()
 	return #{
 		\ autojump: 1,
-		\ autoopenquickfix: 0,
+		\ autoopenquickfix: 1,
 		\ autosave: 1,
 		\ closepreview: "auto",
 		\ default_mappings: 1,
