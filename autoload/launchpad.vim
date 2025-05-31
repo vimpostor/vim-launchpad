@@ -10,7 +10,7 @@ func launchpad#init()
 
 	if g:launchpad_options.default_mappings
 		nnoremap <silent> <Leader>r :call launchpad#run()<CR>
-		nnoremap <silent> <F3> :call launchpad#stop()<CR>
+		nnoremap <silent> <F3> :call launchpad#stop(1)<CR>
 	endif
 
 	command LaunchpadBoilerplate call launchpad#boilerplate()
@@ -38,7 +38,7 @@ func launchpad#job(cmd, opts)
 endfunc
 
 func launchpad#build()
-	call launchpad#stop()
+	call launchpad#stop(0)
 	cclose
 	let s:job_lines = []
 	if g:launchpad_options.autosave
@@ -63,9 +63,14 @@ func launchpad#launch()
 	let s:launch_running = launchpad#lib#launch()
 endfunc
 
-func launchpad#stop()
+func launchpad#stop(toggle)
 	if !s:launch_running
-		call launchpad#toggle_launch_out()
+		if a:toggle
+			" toggle if already stopped
+			call launchpad#toggle_launch_out()
+		else
+			pclose
+		endif
 		return
 	endif
 	let s:job_killed = 1
