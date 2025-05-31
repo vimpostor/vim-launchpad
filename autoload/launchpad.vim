@@ -1,4 +1,5 @@
 let s:job_lines = []
+let s:build_running = 0
 let s:launch_buf = -1
 let s:launch_running = 0
 let s:job_killed = 0
@@ -46,6 +47,7 @@ func launchpad#build()
 	endif
 	echo 'Building...'
 	call launchpad#lib#build()
+	let s:build_running = 1
 endfunc
 
 func launchpad#run()
@@ -71,7 +73,9 @@ func launchpad#stop(toggle)
 		else
 			pclose
 		endif
-		return
+		if !s:build_running
+			return
+		endif
 	endif
 	let s:job_killed = 1
 	if has('nvim')
@@ -90,6 +94,7 @@ func launchpad#out_cb(channel, msg)
 endfunc
 
 func launchpad#build_cb(j, s)
+	let s:build_running = 0
 	" add errors to quickfix-list
 	call setqflist([], 'r', #{lines: s:job_lines, efm: &efm})
 	if g:launchpad_options.autojump && a:s != 0 && getqflist(#{size: 1}).size
