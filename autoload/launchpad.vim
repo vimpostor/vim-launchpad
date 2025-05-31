@@ -136,7 +136,7 @@ endfunc
 func launchpad#toggle_launch_out()
 	if bufwinid(s:launch_buf) + 1
 		pclose
-	else
+	elseif s:launch_buf + 1
 		call launchpad#open_launch_out()
 	endif
 endfunc
