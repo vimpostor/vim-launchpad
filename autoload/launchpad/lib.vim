@@ -11,8 +11,8 @@ func launchpad#lib#dispatch(tgt, fn, ...)
 endfunc
 
 func launchpad#lib#init()
-	for d in readdir(s:path)
-		let d = strpart(d, 0, strridx(d, '.'))
+	let ft = get(g:launchpad_options.filetype_mappings, &filetype, readdir(s:path)->map({_, v -> strpart(v, 0, strridx(v, '.'))}))->insert("00_config")->uniq()
+	for d in ft
 		if launchpad#lib#dispatch(d, "check")
 			let s:lib = d
 			return

@@ -26,6 +26,17 @@ func launchpad#default_options()
 		\ autosave: 1,
 		\ closepreview: "auto",
 		\ default_mappings: 1,
+		\ filetype_mappings: launchpad#default_ft(),
+	\ }
+endfunc
+
+func launchpad#default_ft()
+	return #{
+		\ c: ["cmake"],
+		\ cmake: ["cmake"],
+		\ cpp: ["cmake"],
+		\ qml: ["cmake"],
+		\ rust: ["cargo"],
 	\ }
 endfunc
 
