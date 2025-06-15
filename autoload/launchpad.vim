@@ -107,8 +107,8 @@ func launchpad#build_cb(j, s)
 		endif
 	endif
 
+	call launchpad#util#oneline_hide()
 	if a:s != 0
-		call launchpad#util#oneline_hide()
 		call launchpad#util#notify('Build failed!')
 		return
 	endif
@@ -120,8 +120,6 @@ func launchpad#build_cb(j, s)
 		if s:launch_running
 			call launchpad#util#oneline_show("Target running...")
 		endif
-	else
-		call launchpad#util#oneline_hide()
 	endif
 endfunc
 
