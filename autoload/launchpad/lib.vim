@@ -1,5 +1,6 @@
 let s:path = fnameescape(resolve(expand('<sfile>:p:h')) . '/lib')
 let s:lib = ''
+let s:overwrite_launch = ''
 
 func launchpad#lib#dispatch(tgt, fn, ...)
 	if empty(a:tgt)
@@ -31,6 +32,12 @@ func launchpad#lib#build()
 endfunc
 
 func launchpad#lib#launch()
+	if len(s:overwrite_launch)
+		" custom hardcoded launch
+		call launchpad#job(s:overwrite_launch, #{out_cb: function('launchpad#launch_out_cb'), err_cb: function('launchpad#launch_out_cb'), exit_cb: function('launchpad#launch_cb')})
+		return 1
+	endif
+
 	return launchpad#lib#dispatch(s:lib, "launch")
 endfunc
 
@@ -62,6 +69,10 @@ func launchpad#lib#parse_output_ninja(l)
 	let r = matchlist(a:l,  '^\[\(\d\+\)/\(\d\+\)\] ')
 	call launchpad#build_progress(r[1], r[2])
 	return 1
+endfunc
+
+func launchpad#lib#overwrite_launch(l)
+	let s:overwrite_launch = a:l
 endfunc
 
 call launchpad#lib#init()
