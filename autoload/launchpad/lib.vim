@@ -1,12 +1,8 @@
 let s:path = fnameescape(resolve(expand('<sfile>:p:h')) . '/lib')
-let s:lib = ''
+let s:lib = 'dummy'
 let s:overwrite_launch = ''
 
 func launchpad#lib#dispatch(tgt, fn, ...)
-	if empty(a:tgt)
-		return 0
-	endif
-
 	let args = []
 	if a:0 > 0
 		let args = a:1
