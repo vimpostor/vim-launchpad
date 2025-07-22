@@ -2,6 +2,10 @@ let s:path = fnameescape(resolve(expand('<sfile>:p:h')) . '/lib')
 let s:lib = ''
 
 func launchpad#lib#dispatch(tgt, fn, ...)
+	if empty(a:tgt)
+		return 0
+	endif
+
 	let args = []
 	if a:0 > 0
 		let args = a:1
