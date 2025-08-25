@@ -156,6 +156,8 @@ func launchpad#toggle_launch_out()
 		pclose
 	elseif s:launch_buf + 1
 		call launchpad#open_launch_out()
+	else
+		echom 'No output in last job'
 	endif
 endfunc
 
