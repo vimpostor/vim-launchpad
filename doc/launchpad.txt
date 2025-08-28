@@ -6,6 +6,7 @@ CONTENTS						*launchpad-contents*
 Introduction					|launchpad-introduction|
 Configuration					|launchpad-configure|
 Api						|launchpad-api|
+Commands					|launchpad-commands|
 
 ==============================================================================
 INTRODUCTION						*launchpad-introduction*
@@ -83,6 +84,30 @@ API							*launchpad-api*
 
 	launchpad#run()					*launchpad#run()*
 		Build and launch the project.
+
+------------------------------------------------------------------------------
+COMMANDS						*launchpad-commands*
+
+	LaunchpadBoilerplate				*:LaunchpadBoilerplate*
+		Generates a `.launchpad.json` file outline, which can be used
+		for custom target definitions.
+
+	LaunchpadVimspectorGen				*:LaunchpadVimspectorGen*
+		Generates a `.vimspector.json` file from the existing target
+		configuration for debugging integration with |vimspector|.
+
+	LaunchpadFocus					*:LaunchpadFocus*
+		If the current project contains multiple launchable targets,
+		this can be used to focus a specific target for use with
+		|launchpad#run()|.
+		In case that the specified argument is not a valid target, it
+		will be run in a shell instead, which is useful for running
+		temporary scripts.
+
+	LaunchpadOnce					*:LaunchpadOnce*
+		Similar to |:LaunchpadFocus|, but only use the specified
+		target for the next run, then revert back to the previous
+		target.
 
 ==============================================================================
 	vim:tw=78:sw=4:ts=8:ft=help:norl:noet:
