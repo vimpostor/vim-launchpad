@@ -4,7 +4,9 @@ func launchpad#vimspector#gen()
 		return
 	endif
 
-	call writefile([json_encode(launchpad#vimspector#cpptools())], ".vimspector.json")
+	let json = json_encode(launchpad#vimspector#cpptools())
+	let pretty = systemlist("jq", json)
+	call writefile(v:shell_error ? [json] : pretty, ".vimspector.json")
 endfunc
 
 func launchpad#vimspector#cpptools()

@@ -95,6 +95,7 @@ COMMANDS						*launchpad-commands*
 	LaunchpadVimspectorGen				*:LaunchpadVimspectorGen*
 		Generates a `.vimspector.json` file from the existing target
 		configuration for debugging integration with |vimspector|.
+		If `jq` installed, the resulting json will be pretty-printed.
 
 	LaunchpadFocus					*:LaunchpadFocus*
 		If the current project contains multiple launchable targets,
