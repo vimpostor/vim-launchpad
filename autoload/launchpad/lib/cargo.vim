@@ -22,7 +22,9 @@ func launchpad#lib#cargo#parse_output(l)
 endfunc
 
 func launchpad#lib#cargo#launch_cmd()
-	return printf("cargo run%s", s:current_target < 0 ? "" : "--bin" . s:targets[s:current_target])
+	let targets = launchpad#lib#cargo#targets()
+	let i = max([0, s:current_target])
+	return i >= len(targets) ? ["cargo", "run"] : "target/debug/" . targets[i]
 endfunc
 
 func launchpad#lib#cargo#launch_env()
