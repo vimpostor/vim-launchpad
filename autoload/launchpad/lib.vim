@@ -52,6 +52,14 @@ func launchpad#lib#launch_cmd()
 	return launchpad#lib#dispatch(s:lib, "launch_cmd")
 endfunc
 
+func launchpad#lib#cmdlist()
+	let cmd = launchpad#lib#launch_cmd()
+	if type(cmd) == v:t_string
+		let cmd = [cmd]
+	endif
+	return cmd
+endfunc
+
 func launchpad#lib#launch_env()
 	return launchpad#lib#dispatch(s:lib, "launch_env")
 endfunc
