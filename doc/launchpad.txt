@@ -73,6 +73,11 @@ The following keys are available:
 		Regardless of which items appear in the array, the project
 		launchpad configuration is always attempted first.
 
+	"focusskipsbuild"				*launchpad_options_focusskipsbuild*
+		Determines whether selecting a non-existing target with
+		|LaunchpadFocus| should skip the build phase and proceed
+		directly to launching the target.
+
 ------------------------------------------------------------------------------
 API							*launchpad-api*
 

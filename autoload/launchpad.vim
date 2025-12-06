@@ -29,6 +29,7 @@ func launchpad#default_options()
 		\ closepreview: "auto",
 		\ default_mappings: 1,
 		\ filetype_mappings: launchpad#default_ft(),
+		\ focusskipsbuild: 1,
 	\ }
 endfunc
 

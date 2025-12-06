@@ -28,7 +28,7 @@ func launchpad#lib#init()
 endfunc
 
 func launchpad#lib#build()
-	if len(s:overwrite_launch)
+	if len(s:overwrite_launch) && g:launchpad_options.focusskipsbuild
 		" go straight to launch
 		call timer_start(0, {a -> launchpad#build_cb(a, 0)})
 		return
