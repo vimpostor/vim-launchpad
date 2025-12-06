@@ -17,6 +17,7 @@ func launchpad#init()
 	command LaunchpadBoilerplate call launchpad#boilerplate()
 	command LaunchpadVimspectorGen call launchpad#vimspector#gen()
 	command -nargs=? -complete=customlist,launchpad#target_compl LaunchpadFocus call launchpad#focus_target(<q-args>)
+	command -nargs=1 -complete=customlist,launchpad#lib#lib_compl LaunchpadLibFocus call launchpad#lib#overwrite_lib(<q-args>)
 	command -nargs=1 LaunchpadOnce call launchpad#once(<q-args>)
 endfunc
 

@@ -11,8 +11,12 @@ func launchpad#lib#dispatch(tgt, fn, ...)
 	return Func()
 endfunc
 
+func launchpad#lib#list()
+	return readdir(s:path)->map({_, v -> strpart(v, 0, strridx(v, '.'))})
+endfunc
+
 func launchpad#lib#init()
-	let ft = get(g:launchpad_options.filetype_mappings, &filetype, readdir(s:path)->map({_, v -> strpart(v, 0, strridx(v, '.'))}))->insert("00_config")->uniq()
+	let ft = get(g:launchpad_options.filetype_mappings, &filetype, launchpad#lib#list())->insert("00_config")->uniq()
 	for d in ft
 		if launchpad#lib#dispatch(d, "check")
 			let s:lib = d
@@ -83,6 +87,18 @@ endfunc
 
 func launchpad#lib#overwrite_launch(l)
 	let s:overwrite_launch = a:l
+endfunc
+
+func launchpad#lib#overwrite_lib(l)
+	let s:lib = a:l
+	" need to call a specific lib function to initialize the autoload
+	if !launchpad#lib#dispatch(s:lib, "check")
+		echoe "Warning: Unsupported project for " . s:lib
+	endif
+endfunc
+
+func launchpad#lib#lib_compl(a, l, p)
+	return launchpad#lib#list()->filter({_, v -> !stridx(v, a:a)})
 endfunc
 
 call launchpad#lib#init()

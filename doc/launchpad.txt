@@ -105,6 +105,11 @@ COMMANDS						*launchpad-commands*
 		will be run in a shell instead, which is useful for running
 		temporary scripts.
 
+	LaunchpadLibFocus				*:LaunchpadLibFocus*
+		Overwrites the autodetected backend library implementation
+		with the one given as an argument. This command should only be
+		used if autodetection did not work correctly.
+
 	LaunchpadOnce					*:LaunchpadOnce*
 		Similar to |:LaunchpadFocus|, but only use the specified
 		target for the next run, then revert back to the previous
