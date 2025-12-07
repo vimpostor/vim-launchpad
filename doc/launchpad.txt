@@ -102,6 +102,18 @@ COMMANDS						*launchpad-commands*
 		configuration for debugging integration with |vimspector|.
 		If `jq` installed, the resulting json will be pretty-printed.
 
+	LaunchpadGitBisect				*:LaunchpadGitBisect*
+		Start a build, run and prompt for git bisect status.
+		This is useful as a bisect sequencer for the inclusion in
+		automatic `git bisect run` scripts.
+		If this is used as `git bisect run vim -c LaunchpadGitBisect`,
+		then vim will automatically quit with the correct `git bisect`
+		compatible exit code.
+		When the need arises to cancel the git bisect status popup
+		prompt to focus on other work, then the vim instance can still
+		be manually quit at a later point with |:cquit|, keeping in
+		mind the correctly provided status code.
+
 	LaunchpadFocus					*:LaunchpadFocus*
 		If the current project contains multiple launchable targets,
 		this can be used to focus a specific target for use with

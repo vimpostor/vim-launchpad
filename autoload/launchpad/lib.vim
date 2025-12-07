@@ -64,6 +64,10 @@ func launchpad#lib#cmdlist()
 	return cmd
 endfunc
 
+func launchpad#lib#cmdstr()
+	return launchpad#lib#cmdlist()->join()
+endfunc
+
 func launchpad#lib#launch_env()
 	return launchpad#lib#dispatch(s:lib, "launch_env")
 endfunc

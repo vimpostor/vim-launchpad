@@ -15,6 +15,7 @@ func launchpad#init()
 	endif
 
 	command LaunchpadBoilerplate call launchpad#boilerplate()
+	command LaunchpadGitBisect call launchpad#bisect#sequencer()
 	command LaunchpadVimspectorGen call launchpad#vimspector#gen()
 	command -nargs=? -complete=customlist,launchpad#target_compl LaunchpadFocus call launchpad#focus_target(<q-args>)
 	command -nargs=1 -complete=customlist,launchpad#lib#lib_compl LaunchpadLibFocus call launchpad#lib#overwrite_lib(<q-args>)
