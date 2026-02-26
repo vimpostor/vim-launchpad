@@ -12,6 +12,7 @@ func launchpad#vimspector#gen()
 	let json = json_encode(function("launchpad#vimspector#" . mapping[&filetype])())
 	let pretty = systemlist("jq", json)
 	call writefile(v:shell_error ? [json] : pretty, ".vimspector.json")
+	echo "Generated .vimspector.json for " . launchpad#lib#cmdstr()
 endfunc
 
 func launchpad#vimspector#cpptools()
