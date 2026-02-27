@@ -99,8 +99,8 @@ COMMANDS						*launchpad-commands*
 
 	LaunchpadVimspectorGen				*:LaunchpadVimspectorGen*
 		Generates a `.vimspector.json` file from the existing target
-		configuration for debugging integration with |vimspector|.
-		If `jq` installed, the resulting json will be pretty-printed.
+		configuration for debugging integration with |vimspector|. The
+		resulting json will be pretty-printed, if `jq` is installed.
 
 	LaunchpadGitBisect				*:LaunchpadGitBisect*
 		Start a build, run and prompt for git bisect status.

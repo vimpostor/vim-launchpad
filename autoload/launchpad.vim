@@ -41,6 +41,7 @@ func launchpad#default_ft()
 		\ cpp: ["cmake"],
 		\ qml: ["cmake"],
 		\ rust: ["cargo"],
+		\ tex: ["latex"],
 	\ }
 endfunc
 
