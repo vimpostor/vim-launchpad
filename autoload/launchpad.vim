@@ -61,7 +61,7 @@ func launchpad#build()
 	if g:launchpad_options.autosave
 		silent exe 'wa'
 	endif
-	echo 'Building...'
+	call launchpad#util#oneline_show("Building...")
 	call launchpad#lib#build()
 	let s:build_running = 1
 endfunc
