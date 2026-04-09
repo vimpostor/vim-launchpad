@@ -16,7 +16,7 @@ func launchpad#vimspector#gen()
 endfunc
 
 func launchpad#vimspector#cpptools()
-	return #{configurations: #{Launch: #{adapter: "vscode-cpptools", configuration: #{request: "launch", program: launchpad#lib#cmdlist()[0], args: launchpad#lib#cmdlist()[1:], cwd: $PWD, environment: launchpad#vimspector#micore_environment(launchpad#lib#launch_env()), externalConsole: 1, MIMode: "gdb"}}}}
+	return #{configurations: #{Launch: #{adapter: "vscode-cpptools", configuration: #{request: "launch", program: launchpad#lib#cmdlist()[0], args: launchpad#lib#cmdlist()[1:], cwd: $PWD, environment: launchpad#vimspector#micore_environment(launchpad#lib#launch_env()), externalConsole: 1, MIMode: "gdb", setupCommands: [#{description: "pretty-print", text: "-enable-pretty-printing", ignoreFailures: 1}]}}}}
 endfunc
 
 func launchpad#vimspector#codelldb()
