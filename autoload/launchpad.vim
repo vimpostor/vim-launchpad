@@ -45,6 +45,7 @@ func launchpad#default_ft()
 		\ c: ["cmake"],
 		\ cmake: ["cmake"],
 		\ cpp: ["cmake"],
+		\ haskell: ["cabal"],
 		\ qml: ["cmake"],
 		\ rust: ["cargo"],
 		\ tex: ["latex"],
