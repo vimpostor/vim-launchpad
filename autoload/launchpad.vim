@@ -3,6 +3,7 @@ let s:build_running = 0
 let s:launch_buf = -1
 let s:launch_running = 0
 let s:job_killed = 0
+let s:build_progress = 0.0 " float in [0,1]
 
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
@@ -62,8 +63,9 @@ func launchpad#build()
 		silent exe 'wa'
 	endif
 	call launchpad#util#oneline_show("Building...")
-	call launchpad#lib#build()
+	call launchpad#build_progress_cb(0, 1)
 	let s:build_running = 1
+	call launchpad#lib#build()
 endfunc
 
 func launchpad#run()
@@ -113,6 +115,7 @@ func launchpad#out_cb(channel, msg)
 endfunc
 
 func launchpad#build_cb(j, s)
+	call launchpad#build_progress_cb(0, 1)
 	let s:build_running = 0
 	" add errors to quickfix-list
 	call setqflist([], 'r', #{lines: s:job_lines, efm: &efm})
@@ -194,8 +197,17 @@ func launchpad#launch_out_cb(channel, msg)
 	endif
 endfunc
 
-func launchpad#build_progress(i, n)
-	echo printf("Building %d/%d", a:i, a:n)
+func launchpad#build_progress_cb(i, n)
+	let s:build_progress = abs(round(a:i)) / a:n
+	if exists('#User#LaunchpadProgress')
+		doautocmd User LaunchpadProgress
+	elseif a:i
+		echo printf("Building %d/%d", a:i, a:n)
+	endif
+endfunc
+
+func launchpad#build_progress()
+	return s:build_progress
 endfunc
 
 func launchpad#target_compl(a, l, p)

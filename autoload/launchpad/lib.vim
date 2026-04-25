@@ -85,7 +85,7 @@ func launchpad#lib#parse_output_ninja(l)
 		return 0
 	endif
 	let r = matchlist(a:l,  '^\[\(\d\+\)/\(\d\+\)\] ')
-	call launchpad#build_progress(r[1], r[2])
+	call launchpad#build_progress_cb(str2nr(r[1]), str2nr(r[2]))
 	return 1
 endfunc
 
