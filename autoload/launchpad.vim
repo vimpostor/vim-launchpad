@@ -21,6 +21,10 @@ func launchpad#init()
 	command -nargs=? -complete=customlist,launchpad#target_compl LaunchpadFocus call launchpad#focus_target(<q-args>)
 	command -nargs=1 -complete=customlist,launchpad#lib#lib_compl LaunchpadLibFocus call launchpad#lib#overwrite_lib(<q-args>)
 	command -nargs=1 LaunchpadOnce call launchpad#once(<q-args>)
+
+	if exists('g:tpipeline_progresslen')
+		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | if g:tpipeline_progress <= 0 | unlet g:tpipeline_progress | endif | redrawstatus
+	endif
 endfunc
 
 func launchpad#default_options()
