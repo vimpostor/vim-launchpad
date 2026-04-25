@@ -23,7 +23,7 @@ func launchpad#init()
 	command -nargs=1 LaunchpadOnce call launchpad#once(<q-args>)
 
 	if exists('g:tpipeline_progresslen')
-		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | if g:tpipeline_progress <= 0 | unlet g:tpipeline_progress | endif | redrawstatus | if exists('g:loaded_tpipeline') | call tpipeline#update() | endif
+		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | if g:tpipeline_progress >= 1 | unlet g:tpipeline_progress | endif | redrawstatus | if exists('g:loaded_tpipeline') | call tpipeline#update() | endif
 	endif
 endfunc
 
@@ -67,8 +67,8 @@ func launchpad#build()
 		silent exe 'wa'
 	endif
 	call launchpad#util#oneline_show("Building...")
-	call launchpad#build_progress_cb(0, 1)
 	let s:build_running = 1
+	call launchpad#build_progress_cb(0, 1)
 	call launchpad#lib#build()
 endfunc
 
@@ -119,8 +119,8 @@ func launchpad#out_cb(channel, msg)
 endfunc
 
 func launchpad#build_cb(j, s)
-	call launchpad#build_progress_cb(0, 1)
 	let s:build_running = 0
+	call launchpad#build_progress_cb(1, 1)
 	" add errors to quickfix-list
 	call setqflist([], 'r', #{lines: s:job_lines, efm: &efm})
 	if a:s != 0 && getqflist(#{size: 1}).size
@@ -205,8 +205,6 @@ func launchpad#build_progress_cb(i, n)
 	let s:build_progress = abs(round(a:i)) / a:n
 	if exists('#User#LaunchpadProgress')
 		doautocmd User LaunchpadProgress
-	elseif a:i
-		echo printf("Building %d/%d", a:i, a:n)
 	endif
 endfunc
 
