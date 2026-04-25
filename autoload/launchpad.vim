@@ -23,7 +23,7 @@ func launchpad#init()
 	command -nargs=1 LaunchpadOnce call launchpad#once(<q-args>)
 
 	if exists('g:tpipeline_progresslen')
-		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | if g:tpipeline_progress <= 0 | unlet g:tpipeline_progress | endif | redrawstatus
+		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | if g:tpipeline_progress <= 0 | unlet g:tpipeline_progress | endif | redrawstatus | if exists('g:loaded_tpipeline') | call tpipeline#update() | endif
 	endif
 endfunc
 
