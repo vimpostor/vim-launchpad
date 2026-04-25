@@ -23,7 +23,7 @@ func launchpad#lib#cargo#parse_output(l)
 		let x = strpart(a:l, a, b - a)
 		let b += 1
 		let y = strpart(a:l, b, stridx(a:l, ':', b + 1) - b)
-		call launchpad#build_progress_cb(str2nr(x), str2nr(y))
+		call launchpad#build_progress_cb(str2nr(x), str2nr(y), #{})
 		return 2
 	endif
 	return 0

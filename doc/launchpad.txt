@@ -95,6 +95,12 @@ API							*launchpad-api*
 		Returns the progress of the current build as a |Float| in the
 		range of `[0,1]`. Also refer to |User_LaunchpadProgress|.
 
+	launchpad#build_progress_str()			*launchpad#build_progress_str()*
+		Returns a human-readable representation of the build progress,
+		that can be semantically different and more descriptive than
+		what is returned with |launchpad#build_progress()|. This is
+		empty if there is currently no build running.
+
 ------------------------------------------------------------------------------
 COMMANDS						*launchpad-commands*
 
@@ -143,11 +149,14 @@ AUTOCOMMANDS						*launchpad-autocommands*
 A handful of |User| |autocommands| are provided to allow extending this
 plugin's functionality. Example usage:
 >
-	autocmd User LaunchpadProgress echo launchpad#build_progress()
+	autocmd User LaunchpadProgress echo launchpad#build_progress_str()
 <
 							*User_LaunchpadProgress*
 LaunchpadProgress		When progress of the build has changed. The
-				current value is returned with |launchpad#build_progress()|.
+				current value and a more descriptive
+				representation are returned with
+				|launchpad#build_progress()| and
+				|launchpad#build_progress_str()| respectively.
 
 ==============================================================================
 	vim:tw=78:sw=4:ts=8:ft=help:norl:noet:

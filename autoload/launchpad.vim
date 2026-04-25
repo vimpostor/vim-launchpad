@@ -4,6 +4,7 @@ let s:launch_buf = -1
 let s:launch_running = 0
 let s:job_killed = 0
 let s:build_progress = 0.0 " float in [0,1]
+let s:build_progress_str = ""
 
 func launchpad#init()
 	let g:launchpad_options = extend(launchpad#default_options(), get(g:, 'launchpad_options', {}))
@@ -23,7 +24,7 @@ func launchpad#init()
 	command -nargs=1 LaunchpadOnce call launchpad#once(<q-args>)
 
 	if exists('g:tpipeline_progresslen')
-		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | if g:tpipeline_progress >= 1 | unlet g:tpipeline_progress | endif | redrawstatus | if exists('g:loaded_tpipeline') | call tpipeline#update() | endif
+		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | let g:tpipeline_progress_str = launchpad#build_progress_str() | if g:tpipeline_progress >= 1 | unlet g:tpipeline_progress | endif | redrawstatus | if exists('g:loaded_tpipeline') | call tpipeline#update() | endif
 	endif
 endfunc
 
@@ -68,7 +69,7 @@ func launchpad#build()
 	endif
 	call launchpad#util#oneline_show("Building...")
 	let s:build_running = 1
-	call launchpad#build_progress_cb(0, 1)
+	call launchpad#build_progress_cb(0, 1, #{p: "..."})
 	call launchpad#lib#build()
 endfunc
 
@@ -121,7 +122,7 @@ endfunc
 
 func launchpad#build_cb(j, s)
 	let s:build_running = 0
-	call launchpad#build_progress_cb(1, 1)
+	call launchpad#build_progress_cb(1, 1, #{p: ""})
 	" add errors to quickfix-list
 	call setqflist([], 'r', #{lines: s:job_lines, efm: &efm})
 	if a:s != 0 && getqflist(#{size: 1}).size
@@ -202,8 +203,9 @@ func launchpad#launch_out_cb(channel, msg)
 	endif
 endfunc
 
-func launchpad#build_progress_cb(i, n)
+func launchpad#build_progress_cb(i, n, s)
 	let s:build_progress = abs(round(a:i)) / a:n
+	let s:build_progress_str = get(a:s, 'p', printf("%d/%d", a:i, a:n))
 	if exists('#User#LaunchpadProgress')
 		doautocmd User LaunchpadProgress
 	endif
@@ -211,6 +213,10 @@ endfunc
 
 func launchpad#build_progress()
 	return s:build_progress
+endfunc
+
+func launchpad#build_progress_str()
+	return s:build_progress_str
 endfunc
 
 func launchpad#target_compl(a, l, p)
