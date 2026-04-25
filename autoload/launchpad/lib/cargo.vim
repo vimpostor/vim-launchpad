@@ -6,7 +6,7 @@ func launchpad#lib#cargo#check()
 endfunc
 
 func launchpad#lib#cargo#build()
-	call launchpad#job(printf("cargo build%s", s:current_target < 0 ? "" : " --bin " . s:targets[s:current_target]), #{err_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
+	call launchpad#job(printf("cargo build%s", s:current_target < 0 ? "" : " --bin " . s:targets[s:current_target]), #{env: #{CARGO_TERM_PROGRESS_WHEN: 'always', CARGO_TERM_PROGRESS_WIDTH: '80'}, err_cb: function('launchpad#out_cb'), exit_cb: function('launchpad#build_cb')})
 endfunc
 
 func launchpad#lib#cargo#launch()
@@ -17,6 +17,14 @@ endfunc
 func launchpad#lib#cargo#parse_output(l)
 	if !stridx(a:l, "   Compiling")
 		return 1
+	elseif !stridx(a:l, "    Building ")
+		let a = stridx(a:l, ']', 14) + 2
+		let b = stridx(a:l, '/', a + 1)
+		let x = strpart(a:l, a, b - a)
+		let b += 1
+		let y = strpart(a:l, b, stridx(a:l, ':', b + 1) - b)
+		call launchpad#build_progress_cb(str2nr(x), str2nr(y))
+		return 2
 	endif
 	return 0
 endfunc
