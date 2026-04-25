@@ -47,8 +47,11 @@ func launchpad#lib#launch()
 	return launchpad#lib#dispatch(s:lib, "launch")
 endfunc
 
+" the return value indicates if the event should be consumed
+" 0: normal compiler output to be considered for errorformat
+" 1: consume the event, but may still be displayed in the UI
+" 2: consume the event completely
 func launchpad#lib#parse_output(l)
-	" returns 1 if it consumes the event
 	return launchpad#lib#dispatch(s:lib, "parse_output", [a:l])
 endfunc
 

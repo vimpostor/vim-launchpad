@@ -111,10 +111,11 @@ func launchpad#stop(toggle)
 endfunc
 
 func launchpad#out_cb(channel, msg)
-	if launchpad#lib#parse_output(a:msg)
-		call launchpad#util#oneline_show(a:msg)
-	else
+	let r = launchpad#lib#parse_output(a:msg)
+	if !r
 		call add(s:job_lines, a:msg)
+	elseif r == 1
+		call launchpad#util#oneline_show(a:msg)
 	endif
 endfunc
 
