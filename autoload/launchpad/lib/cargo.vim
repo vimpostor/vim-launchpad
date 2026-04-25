@@ -15,7 +15,7 @@ func launchpad#lib#cargo#launch()
 endfunc
 
 func launchpad#lib#cargo#parse_output(l)
-	if !stridx(a:l, "   Compiling")
+	if !stridx(a:l, "   Compiling") || !stridx(a:l, "    Blocking")
 		return 1
 	elseif !stridx(a:l, "    Building ")
 		let a = stridx(a:l, ']', 14) + 2
