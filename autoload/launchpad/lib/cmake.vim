@@ -27,7 +27,7 @@ endfunc
 func launchpad#lib#cmake#ninja_target_file(tgt)
 	let n = s:targets[a:tgt]
 	let l = readfile('build/build.ninja')
-	let e = printf('build %s: ', n)
+	let e = printf('build %s', n)
 	let found = 0
 	for i in l
 		if strpart(i, 0, len(e)) ==# e
