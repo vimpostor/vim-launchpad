@@ -87,6 +87,7 @@ endfunc
 func launchpad#launch()
 	if s:launch_buf >= 0
 		" unload the last output buffer
+		au! launchpad
 		exe 'bdelete ' . s:launch_buf
 		let s:launch_buf = -1
 	endif
@@ -195,6 +196,9 @@ func launchpad#launch_out_cb(channel, msg)
 		call setbufvar(s:launch_buf, "&bufhidden", "hide")
 		call setbufvar(s:launch_buf, "&swapfile", 0)
 		call launchpad#open_launch_out()
+		augroup launchpad
+			exe printf("au InsertCharPre <buffer=%d> call launchpad#send_job(v:char)", s:launch_buf)
+		augroup END
 	endif
 	" append the line to the buffer
 	if len(getbufoneline(s:launch_buf, '$'))
