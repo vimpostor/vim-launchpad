@@ -197,7 +197,7 @@ func launchpad#launch_out_cb(channel, msg)
 		call setbufvar(s:launch_buf, "&swapfile", 0)
 		call launchpad#open_launch_out()
 		augroup launchpad
-			exe printf("au InsertCharPre <buffer=%d> call launchpad#send_job(v:char)", s:launch_buf)
+			exe printf("au InsertLeave <buffer=%d> call launchpad#send_job(join(getregion(getpos(\"'[\"), getpos(\"']\")), \"\n\"))", s:launch_buf)
 		augroup END
 	endif
 	" append the line to the buffer
