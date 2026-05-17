@@ -22,6 +22,7 @@ func launchpad#init()
 	command -nargs=? -complete=customlist,launchpad#target_compl LaunchpadFocus call launchpad#focus_target(<q-args>)
 	command -nargs=1 -complete=customlist,launchpad#lib#lib_compl LaunchpadLibFocus call launchpad#lib#overwrite_lib(<q-args>)
 	command -nargs=1 LaunchpadOnce call launchpad#once(<q-args>)
+	command -nargs=1 LaunchpadInput call launchpad#send_job(<q-args> . "\n")
 
 	if exists('g:tpipeline_progresslen')
 		au User LaunchpadProgress let g:tpipeline_progress = launchpad#build_progress() | let g:tpipeline_progress_str = launchpad#build_progress_str() | if g:tpipeline_progress >= 1 | unlet g:tpipeline_progress | endif | redrawstatus | if exists('g:loaded_tpipeline') | call tpipeline#update() | endif
@@ -59,6 +60,10 @@ func launchpad#job(cmd, opts)
 		let options = extend(#{noblock: 1}, a:opts)
 		let s:job = job_start(a:cmd, options)
 	endif
+endfunc
+
+func launchpad#send_job(s)
+	call ch_sendraw(s:job, a:s)
 endfunc
 
 func launchpad#build()

@@ -101,6 +101,10 @@ API							*launchpad-api*
 		what is returned with |launchpad#build_progress()|. This is
 		empty if there is currently no build running.
 
+	launchpad#send_job(input)			*launchpad#send_job()*
+		Writes the provided string `input` into the stdin of the
+		currently running job. Also refer to |:LaunchpadInput|.
+
 ------------------------------------------------------------------------------
 COMMANDS						*launchpad-commands*
 
@@ -142,6 +146,11 @@ COMMANDS						*launchpad-commands*
 		Similar to |:LaunchpadFocus|, but only use the specified
 		target for the next run, then revert back to the previous
 		target.
+
+	LaunchpadInput					*:LaunchpadInput*
+		Prompts for input and sends it to stdin of the currently
+		running job. A line-feed character is automatically appended.
+		Also refer to |launchpad#send_job()|.
 
 ------------------------------------------------------------------------------
 AUTOCOMMANDS						*launchpad-autocommands*
