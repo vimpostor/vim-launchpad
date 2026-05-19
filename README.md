@@ -8,6 +8,8 @@ Vim by default ships with usable build support as per [:h :compiler](https://vim
 - Provide a reasonable interface (e.g. show program output)
 - Add debugging integration with [vimspector](https://github.com/puremourning/vimspector)
 
+[![asciicast](https://asciinema.org/a/1091869.svg)](https://asciinema.org/a/1091869)
+
 # Installation
 
 Using **vim-plug**:
