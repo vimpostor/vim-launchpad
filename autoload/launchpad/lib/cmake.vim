@@ -2,7 +2,11 @@ let s:targets = []
 let s:current_target = -1
 
 func launchpad#lib#cmake#check()
-	return filereadable('CMakeLists.txt')
+	let r = filereadable('CMakeLists.txt')
+	if r
+		compiler gcc
+	endif
+	return r
 endfunc
 
 func launchpad#lib#cmake#build()
