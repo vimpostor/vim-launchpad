@@ -93,7 +93,7 @@ func launchpad#lib#parse_output_ninja(l)
 endfunc
 
 func launchpad#lib#overwrite_launch(l)
-	let s:overwrite_launch = a:l
+	let s:overwrite_launch = [&shell, '-c', a:l]
 endfunc
 
 func launchpad#lib#overwrite_lib(l)

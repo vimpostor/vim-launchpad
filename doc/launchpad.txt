@@ -134,8 +134,8 @@ COMMANDS						*launchpad-commands*
 		this can be used to focus a specific target for use with
 		|launchpad#run()|.
 		In case that the specified argument is not a valid target, it
-		will be run in a shell instead, which is useful for running
-		temporary scripts.
+		will be run directly using |shell| instead, which is useful
+		for running temporary scripts.
 
 	LaunchpadLibFocus				*:LaunchpadLibFocus*
 		Overwrites the autodetected backend library implementation
