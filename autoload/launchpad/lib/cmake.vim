@@ -74,8 +74,14 @@ func launchpad#lib#cmake#launch_env()
 	return {}
 endfunc
 
+func launchpad#lib#cmake#get_ninja_target_names(n)
+	return a:n->map({_, v -> strpart(v, 0, stridx(v, ' ') - 1)})
+endfunc
+
 func launchpad#lib#cmake#targets()
-	let s:targets = systemlist("ninja -C build -t targets all")->filter({_, v -> stridx(v, "EXECUTABLE") > stridx(v, ' ')})->map({_, v -> strpart(v, 0, stridx(v, ' ') - 1)})
+	let n = systemlist("ninja -C build -t targets all")
+	let execs = launchpad#lib#cmake#get_ninja_target_names(copy(n)->filter({_, v -> stridx(v, "EXECUTABLE") > stridx(v, ' ')}))
+	let s:targets = execs + launchpad#lib#cmake#get_ninja_target_names(n->filter({_, v -> match(v, "_qmlpreview: ") + 1 && index(execs, strpart(v, 0, stridx(v, '_'))) + 1}))
 	return s:targets
 endfunc
 
